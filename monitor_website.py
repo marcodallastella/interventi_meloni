@@ -69,7 +69,7 @@ def main():
   main_url = 'https://www.governo.it'
   filename = "./data/interventi_meloni.csv"
 
-  interventi_urls = get_interventi_urls(base_url)
+  interventi_urls = get_interventi_urls(main_url)
   existing_urls = read_csv(filename)
 
   new_urls = [url for url in interventi_urls if url not in existing_urls]
