@@ -1,0 +1,28 @@
+name: Run monitor_website.py
+
+on:
+  schedule:
+    - cron:  '0 0 * * *'
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python 3.8
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.8
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install requests beautifulsoup4 pandas
+    - name: Run monitor_website.py
+      run: python monitor_website.py
+
+    - name: Commit and push if changed
+      run: |
+        git add .
+        git diff --quiet && git diff --staged --quiet || (git commit -m 'Update interventi_meloni.csv'; git push)
