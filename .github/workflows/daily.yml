@@ -1,7 +1,6 @@
 name: Run monitor_website.py
 
 on:
-  workflow_dispatch:
   schedule:
     - cron:  '0 0 * * *'
 
