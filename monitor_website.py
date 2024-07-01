@@ -4,7 +4,7 @@ from bs4 import BeautifulSoup
 from datetime import datetime
 from time import sleep
 
-def get_interventi_urls(base_url):
+def get_interventi_urls(base_url, main_url):
   response = requests.get(base_url)
   response.raise_for_status()
   soup = BeautifulSoup(response.text, "html.parser")
@@ -69,7 +69,7 @@ def main():
   main_url = 'https://www.governo.it'
   filename = "./data/interventi_meloni.csv"
 
-  interventi_urls = get_interventi_urls(main_url)
+  interventi_urls = get_interventi_urls(base_url, main_url)
   existing_urls = read_csv(filename)
 
   new_urls = [url for url in interventi_urls if url not in existing_urls]
