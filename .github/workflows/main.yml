@@ -24,7 +24,12 @@ jobs:
     - name: Run monitor_website.py
       run: python monitor_website.py
 
-    - name: Commit and push if changed
+    - name: Commit and push changes
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
+        git config user.name "Automated"
+        git config user.email "actions@users.noreply.github.com"
         git add .
-        git diff --quiet && git diff --staged --quiet || (git commit -m 'Update interventi_meloni.csv'; git push)
+        git commit -m "Automated data processing"
+        git push https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }} HEAD:main
