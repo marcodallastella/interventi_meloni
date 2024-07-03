@@ -1,4 +1,4 @@
-import requests, locale, csv
+import requests, csv
 import pandas as pd
 from bs4 import BeautifulSoup
 from datetime import datetime
@@ -25,29 +25,27 @@ def read_csv(filename):
   return df["url"].tolist()
 
 def get_date(soup):
-  # locale.setlocale(locale.LC_TIME, 'it_IT.UTF-8')
   italian_months = {
-      "gennaio": "01",
-      "febbraio": "02",
-      "marzo": "03",
-      "aprile": "04",
-      "maggio": "05",
-      "giugno": "06",
-      "luglio": "07",
-      "agosto": "08",
-      "settembre": "09",
-      "ottobre": "10",
-      "novembre": "11",
-      "dicembre": "12"
+      'gennaio': 'January',
+      'febbraio': 'February',
+      'marzo': 'March',
+      'aprile': 'April',
+      'maggio': 'May',
+      'giugno': 'June',
+      'luglio': 'July',
+      'agosto': 'August',
+      'settembre': 'September',
+      'ottobre': 'October',
+      'novembre': 'November',
+      'dicembre': 'December'
   }
 
   date = soup.find("p", class_="h6").text
-  day_month, year = date.split(", ")[1].split()
-  # Format the date in YYYY-MM-DD
-  formatted_date = f"{year}-{italian_months[day_month.lower()]}-{day_of_month:02}"
-
-  # italian_date = datetime.strptime(date, "%A, %d %B %Y")
-  # formatted_date = italian_date.strftime("%Y-%m-%d")
+  date = date.split(", ")[1]
+  day_str, month_str, year_str = date.split()
+  month_str = italian_months.get(month_str.lower(), month_str)
+  date_obj = datetime.strptime(f"{day_str} {month_str} {year_str}", "%d %B %Y")
+  formatted_date = date_obj.strftime('%Y-%m-%d')
   return formatted_date
 
 def create_data(interventi_urls):
