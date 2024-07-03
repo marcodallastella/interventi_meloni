@@ -25,10 +25,29 @@ def read_csv(filename):
   return df["url"].tolist()
 
 def get_date(soup):
-  locale.setlocale(locale.LC_TIME, 'it_IT.UTF-8')
+  # locale.setlocale(locale.LC_TIME, 'it_IT.UTF-8')
+  italian_months = {
+      "gennaio": "01",
+      "febbraio": "02",
+      "marzo": "03",
+      "aprile": "04",
+      "maggio": "05",
+      "giugno": "06",
+      "luglio": "07",
+      "agosto": "08",
+      "settembre": "09",
+      "ottobre": "10",
+      "novembre": "11",
+      "dicembre": "12"
+  }
+
   date = soup.find("p", class_="h6").text
-  italian_date = datetime.strptime(date, "%A, %d %B %Y")
-  formatted_date = italian_date.strftime("%Y-%m-%d")
+  day_month, year = date_str.split(", ")[1].split()
+  # Format the date in YYYY-MM-DD
+  formatted_date = f"{year}-{italian_months[day_month.lower()]}-{day_of_month:02}"
+
+  # italian_date = datetime.strptime(date, "%A, %d %B %Y")
+  # formatted_date = italian_date.strftime("%Y-%m-%d")
   return formatted_date
 
 def create_data(interventi_urls):
