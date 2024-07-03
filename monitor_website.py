@@ -42,7 +42,7 @@ def get_date(soup):
   }
 
   date = soup.find("p", class_="h6").text
-  day_month, year = date_str.split(", ")[1].split()
+  day_month, year = date.split(", ")[1].split()
   # Format the date in YYYY-MM-DD
   formatted_date = f"{year}-{italian_months[day_month.lower()]}-{day_of_month:02}"
 
