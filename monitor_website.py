@@ -72,14 +72,19 @@ def append_to_csv(data, filename):
     for row in data:
       writer.writerow(row)
 
-def write_to_csv(data, filename):
-  with open(filename, "w", newline="") as csvfile:
-    fieldnames = ["title", "content", "date", "url"]
-    writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+def reorder_csv():
+  df = pd.read_csv('data/interventi_meloni.csv')
+  df = df.sort_values('date', ascending=False)
+  df.to_csv('data/interventi_meloni', index=False, encoding='utf-8-sig')
 
-    writer.writeheader()
-    for row in data:
-      writer.writerow(row)
+# def write_to_csv(data, filename):
+#   with open(filename, "w", newline="") as csvfile:
+#     fieldnames = ["title", "content", "date", "url"]
+#     writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+
+#     writer.writeheader()
+#     for row in data:
+#       writer.writerow(row)
 
 def main():
   base_url = 'https://www.governo.it/it/interventi'
@@ -96,5 +101,7 @@ def main():
     append_to_csv(data, filename)
   else:
     print("No new URLS found.")
+  
+  reorder_csv()
 
 main()
