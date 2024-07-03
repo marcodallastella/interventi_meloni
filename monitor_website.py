@@ -75,7 +75,7 @@ def append_to_csv(data, filename):
 def reorder_csv():
   df = pd.read_csv('data/interventi_meloni.csv')
   df = df.sort_values('date', ascending=False)
-  df.to_csv('data/interventi_meloni', index=False, encoding='utf-8-sig')
+  df.to_csv('data/interventi_meloni.csv', index=False, encoding='utf-8-sig')
 
 # def write_to_csv(data, filename):
 #   with open(filename, "w", newline="") as csvfile:
